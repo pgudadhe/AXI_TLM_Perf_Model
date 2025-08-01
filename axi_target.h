@@ -9,40 +9,19 @@ public:
 
     //SC_HAS_PROCESS(AXITarget); 
 
-    AXITarget(sc_module_name name) : 
+    AXITarget(sc_module_name name, uint32_t read_bus_width) : 
             sc_module(name),
+            m_cfg_axi_read_bus_width(read_bus_width),
             socket("socket")
     {
         socket.register_nb_transport_fw(this, &AXITarget::nb_transport_fw);
     }   
 
-    tlm_sync_enum nb_transport_fw(tlm_generic_payload& trans, tlm_phase& phase, sc_time& delay) 
-    {
-        if (phase == BEGIN_REQ) 
-        {
-            // Address phase
-            delay += sc_time(10, SC_NS); // Simulate address phase delay
-            wait(delay);
+    tlm_sync_enum nb_transport_fw(tlm_generic_payload& trans, tlm_phase& phase, sc_time& delay) ;
+    void process_transaction(tlm_generic_payload& trans) ;
 
-            // Process transaction
-            process_transaction(trans);
-
-            phase = BEGIN_RESP;
-            return TLM_UPDATED;
-        } else if (phase == END_RESP) 
-        {
-            return TLM_COMPLETED;
-        }
-        return TLM_ACCEPTED;
-    }
-
-    void process_transaction(tlm_generic_payload& trans) 
-    {
-        // Simulate processing the transaction
-        cout << "AXITarget: Processing transaction at time: " << sc_time_stamp() << endl;
-
-        // Set response status
-    } 
+private:
+    uint32_t m_cfg_axi_read_bus_width = 0; // 0:4B, 1:8B, 2:16B, 3:32B, 4:64B
 };
 
 #endif // AXI_TARGET_H

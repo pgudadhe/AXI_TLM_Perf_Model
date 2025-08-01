@@ -7,11 +7,8 @@ include_directories("/mnt/e/Documents/Code/systemc-3.0.1/src")
 link_directories("/mnt/e/Documents/Code/systemc-3.0.1/lib-linux64")
 
 # Create a sources variable with a link to all cpp files to compile
-set(SOURCES
-    main.cpp
-)
-
-add_executable(AXI_TLM_PERF_MODEL ${SOURCES})
+file(GLOB SRC_FILES *.cpp)
+add_executable(AXI_TLM_PERF_MODEL ${SRC_FILES})
 target_link_libraries(AXI_TLM_PERF_MODEL libsystemc.so)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

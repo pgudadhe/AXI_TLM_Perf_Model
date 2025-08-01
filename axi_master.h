@@ -1,6 +1,7 @@
 #ifndef AXI_MASTER_H
 #define AXI_MASTER_H
 
+#include <random>
 #include "axi_common.h"
 
 class AXIMaster : public sc_module {
@@ -10,8 +11,14 @@ public:
 
     //SC_HAS_PROCESS(AXIMaster);  
 
-    AXIMaster(sc_module_name name) : 
+    AXIMaster(  sc_module_name name, 
+                uint32_t total_transactions = 10,
+                float wr_to_rd_ratio = 0.5, // Default 50% Write, 50% Read 
+                uint32_t write_bus_width = 0) : 
         sc_module(name),
+        m_cfg_total_transactions(total_transactions),
+        m_cfg_wr_to_rd_ratio(wr_to_rd_ratio),
+        m_cfg_axi_write_bus_width(write_bus_width),
         socket("socket"), 
         peq(this, &AXIMaster::peq_cb)
     {
@@ -19,36 +26,20 @@ public:
         sensitive << m_traffic_generator_event;
     }   
 
-    void traffic_generator_method() 
-    {
-        cout << "Transaction: " << m_transaction_count << " at time: " << clock() << endl;
-        m_transaction_count++;
+    void traffic_generator_method();
 
-        if (m_transaction_count < m_cfg_total_transactions)
-            m_traffic_generator_event.notify(1, SC_NS);
-
-    }
-
-    tlm_sync_enum nb_transport_bw(tlm_generic_payload& trans, tlm_phase& phase, sc_time& delay) 
-    {
-        peq.notify(trans, phase, delay);
-        return TLM_ACCEPTED;
-    }
-
-    void peq_cb(tlm_generic_payload& trans, const tlm_phase& phase) {
-        if (phase == BEGIN_RESP) {
-            tlm_phase fw_phase = END_RESP;
-            sc_time delay = SC_ZERO_TIME;
-            socket->nb_transport_fw(trans, fw_phase, delay);
-
-            trans.release();
-        }
-    }
+    // TLM functions
+    tlm_sync_enum nb_transport_bw(tlm_generic_payload& trans, tlm_phase& phase, sc_time& delay);
+    void peq_cb(tlm_generic_payload& trans, const tlm_phase& phase);
 
 private:
+    tlm::tlm_command generate_tlm_command();
+
     sc_event m_traffic_generator_event;
     uint32_t m_transaction_count = 0;
     uint32_t m_cfg_total_transactions = 100;
+    float m_cfg_wr_to_rd_ratio = 0.5; // Default 50% Write, 50% Read
+    uint32_t m_cfg_axi_write_bus_width = 0; // 0:4B, 1:8B, 2:16B, 3:32B, 4:64B
 };
 
 #endif // AXI_MASTER_H
