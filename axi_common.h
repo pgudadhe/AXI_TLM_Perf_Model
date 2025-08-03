@@ -14,4 +14,10 @@ using namespace std;
 using namespace sc_core;
 using namespace tlm;
 
+#define AXI_CLK_PERIOD 10, SC_NS // Define clock period
+
+#define DEBUG_PRINT(level, msg) \
+    if (level <= m_cfg_debug_level) std::cout << msg << std::endl;
+
+
 #endif // AXI_COMMON_H
