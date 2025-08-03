@@ -44,8 +44,8 @@ Running the model with default options would show an output like this:
 
 ```bash
 Info: /OSCI/SystemC: Simulation stopped by user.
-AXIMaster: Total Read Delay: 32730 ns 
-AXITarget: Total Write Delay: 20750 ns
+Total Read Delay: 32730 ns 
+Total Write Delay: 20750 ns
 ```
 
 ## Performance Data Analysis:
