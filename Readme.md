@@ -47,3 +47,22 @@ Info: /OSCI/SystemC: Simulation stopped by user.
 AXIMaster: Total Read Delay: 32730 ns 
 AXITarget: Total Write Delay: 20750 ns
 ```
+
+## Performance Data Analysis:
+I ran multiple experiments on this model collecting data by varying these knobs individually or together. Based on the data I collected, this is the performance analysis I observed. Please note, that the numbers seen here are not real world numbers. The intention here is to observe the trends in data by varying performance model knobs. I used arbitrary values for the delay and cycle time etc. To get more accurate numbers, these values need to be correctly set by consulting the right people. 
+Here is the trend observed in the execution time by varying Read and Write bandwidth using -rb and -wb options respectively. 
+
+<img width="752" height="452" alt="image" src="https://github.com/user-attachments/assets/a0e3ffa7-c9ba-483a-88a0-77b64c10747d" />
+
+As expected we can see a great benefit from increasing the bandwidth.
+
+Next, I collected data on execution time by varying the request size. I decided to collect data for these sizes, 64B, 128B, 256B, 512B, 1KB, 2KB and 4KB.
+
+<img width="752" height="452" alt="image" src="https://github.com/user-attachments/assets/3d1b7e49-1308-4dc7-a476-b24387b2d4c4" />
+
+Lastly, I decided to collect data by varying the transaction command probability. Following graph shows how execution time for Read and Write requests varies in accordance with the probability.
+
+<img width="752" height="452" alt="image" src="https://github.com/user-attachments/assets/ebe4d7b1-ddbb-4a2f-b892-93666f96d6a9" />
+
+I plan to add more features to this project like statistics file generation, back pressure etc. 
+
