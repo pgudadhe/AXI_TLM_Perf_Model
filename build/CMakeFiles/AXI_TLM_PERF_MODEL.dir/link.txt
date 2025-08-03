@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/AXI_TLM_PERF_MODEL.dir/axi_master.cpp.o CMakeFiles/AXI_TLM_PERF_MODEL.dir/axi_target.cpp.o CMakeFiles/AXI_TLM_PERF_MODEL.dir/main.cpp.o -o AXI_TLM_PERF_MODEL   -L/mnt/e/Documents/Code/systemc-3.0.1/lib-linux64  -Wl,-rpath,/mnt/e/Documents/Code/systemc-3.0.1/lib-linux64 -lsystemc 
