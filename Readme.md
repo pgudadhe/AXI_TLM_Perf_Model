@@ -35,10 +35,12 @@ with Read bus width of 16B and Write bus width of 32B.
 Default values: -n 10, -r 0.5, -rb 0, -wb 0
 ```
 
--n:       Users can specify the number of requests that need to be made to the AXI target.
--s:       Users can keep a fixed size of all requests (upto 4KB) or it can be randomized.
--r:       No. of Read requests vs Write requests can be randomized based on probability distribution of Bernoulli.
--rb/-wr:  Key knobs of this simulation where user can vary the bandwidth of the Read and Write data buses. 
+| Commandline Option      | Description |
+| ----------- | ----------- |
+| n | Users can specify the number of requests that need to be made to the AXI target |
+| s | Users can keep a fixed size of all requests (upto 4KB) or it can be randomized |
+| r | No. of Read requests vs Write requests can be randomized based on probability distribution of Bernoulli |
+| rb/wr | Key knobs of this model where user can vary the bandwidth of the Read and Write data buses |
 
 Running the model with default options would show an output like this:
 
